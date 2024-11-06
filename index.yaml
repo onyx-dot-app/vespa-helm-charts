@@ -3,6 +3,16 @@ entries:
   vespa:
   - apiVersion: v2
     appVersion: 1.16.0
+    created: "2024-11-06T06:01:27.336042807Z"
+    description: A Helm chart for Kubernetes
+    digest: e99fbd75ae43e937749375a33edfcac4cd40ec2e1d929ba1797f215e05f1c531
+    name: vespa
+    type: application
+    urls:
+    - https://github.com/danswer-ai/vespa-helm-charts/releases/download/vespa-0.2.8/vespa-0.2.8.tgz
+    version: 0.2.8
+  - apiVersion: v2
+    appVersion: 1.16.0
     created: "2024-11-06T05:11:25.522411608Z"
     description: A Helm chart for Kubernetes
     digest: c24799113aa7724fc4a920151ab03bb39182737d137abaa015e346fd370c692f
@@ -41,4 +51,4 @@ entries:
     urls:
     - https://github.com/danswer-ai/vespa-helm-charts/releases/download/vespa-0.2.4/vespa-0.2.4.tgz
     version: 0.2.4
-generated: "2024-11-06T05:11:25.522445031Z"
+generated: "2024-11-06T06:01:27.336067413Z"
