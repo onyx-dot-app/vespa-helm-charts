@@ -3,6 +3,16 @@ entries:
   vespa:
   - apiVersion: v2
     appVersion: 8.526.15
+    created: "2025-06-03T22:20:17.133102223Z"
+    description: A Helm chart for Kubernetes
+    digest: 5fab841cd8248d7792190f1d75b5b69034b1b6b166b41014bd00efa9f2fca561
+    name: vespa
+    type: application
+    urls:
+    - https://github.com/onyx-dot-app/vespa-helm-charts/releases/download/vespa-0.2.23/vespa-0.2.23.tgz
+    version: 0.2.23
+  - apiVersion: v2
+    appVersion: 8.526.15
     created: "2025-06-03T20:48:38.169760415Z"
     description: A Helm chart for Kubernetes
     digest: a42a09880818970424e6aa4f9e9dbd2436ec1eef1a7c68ecb8e7645768abc308
@@ -181,4 +191,4 @@ entries:
     urls:
     - https://github.com/danswer-ai/vespa-helm-charts/releases/download/vespa-0.2.4/vespa-0.2.4.tgz
     version: 0.2.4
-generated: "2025-06-03T20:48:38.169878853Z"
+generated: "2025-06-03T22:20:17.133239376Z"
