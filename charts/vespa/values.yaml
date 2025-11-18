@@ -10,7 +10,7 @@ image:
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
   # Update this also in Chart.yaml/appVersion
-  tag: "8.526.15"
+  tag: "8.609.39"
 
 imagePullSecrets: []
 nameOverride: ""
