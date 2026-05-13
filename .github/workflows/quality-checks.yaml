@@ -16,7 +16,7 @@ permissions:
   contents: read
 
 jobs:
-  helm-lint:
+  quality-checks:
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
