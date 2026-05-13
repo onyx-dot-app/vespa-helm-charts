@@ -1,0 +1,70 @@
+name: Quality Checks PR
+concurrency:
+  group: Quality-Checks-PR-${{ github.workflow }}-${{ github.head_ref || github.event.workflow_run.head_branch || github.run_id }}
+  cancel-in-progress: true
+
+on:
+  merge_group:
+  pull_request: null
+  push:
+    branches:
+      - main
+    tags:
+      - "v*.*.*"
+
+permissions:
+  contents: read
+
+jobs:
+  quality-checks:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # ratchet:actions/checkout@v6.0.2
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Set up Python
+        uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405 # ratchet:actions/setup-python@v6.2.0
+        with:
+          python-version: "3.11"
+
+      - name: Set up Helm
+        uses: azure/setup-helm@1a275c3b69536ee54be43f2070a358922e12c8d4 # ratchet:azure/setup-helm@v4.3.1
+
+      - name: Set up chart-testing
+        uses: helm/chart-testing-action@6ec842c01de15ebb84c8627d2744a0c2f2755c9f # ratchet:helm/chart-testing-action@v2.8.0
+
+      - name: Determine ct target branch
+        id: ct-target
+        env:
+          BASE_REF: ${{ github.base_ref }}
+          EVENT_NAME: ${{ github.event_name }}
+        run: |
+          if [ "$EVENT_NAME" = "pull_request" ] && [ -n "$BASE_REF" ]; then
+            echo "target=$BASE_REF" >> "$GITHUB_OUTPUT"
+          else
+            echo "target=main" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Run helm lint (all charts)
+        run: |
+          for chart in charts/*/; do
+            echo "::group::helm lint $chart"
+            helm lint "$chart"
+            echo "::endgroup::"
+          done
+
+      - name: Run chart-testing (list-changed)
+        id: list-changed
+        run: |
+          changed=$(ct list-changed --config .github/ct.yaml --target-branch "${{ steps.ct-target.outputs.target }}")
+          if [ -n "$changed" ]; then
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Run chart-testing (lint)
+        if: steps.list-changed.outputs.changed == 'true'
+        run: ct lint --config .github/ct.yaml --target-branch "${{ steps.ct-target.outputs.target }}" --check-version-increment
