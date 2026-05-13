@@ -44,9 +44,9 @@ jobs:
           EVENT_NAME: ${{ github.event_name }}
         run: |
           if [ "$EVENT_NAME" = "pull_request" ] && [ -n "$BASE_REF" ]; then
-            echo "target=origin/$BASE_REF" >> "$GITHUB_OUTPUT"
+            echo "target=$BASE_REF" >> "$GITHUB_OUTPUT"
           else
-            echo "target=origin/main" >> "$GITHUB_OUTPUT"
+            echo "target=main" >> "$GITHUB_OUTPUT"
           fi
 
       - name: Run helm lint (all charts)
