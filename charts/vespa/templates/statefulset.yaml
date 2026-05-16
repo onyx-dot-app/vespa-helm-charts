@@ -65,7 +65,7 @@ spec:
           {{- end }}
           env:
           - name: VESPA_CONFIGSERVERS
-            value: da-vespa-0.{{ .Values.service.name }}.{{ .Release.Namespace }}.svc.cluster.local
+            value: da-vespa-0.{{ .Values.service.name }}.{{ .Release.Namespace }}.svc.{{ .Values.clusterDomain }}
           - name: VESPA_SKIP_UPGRADE_CHECK
             value: "true"
 
